@@ -10,7 +10,13 @@ class ToDoListPage extends StatefulWidget {
 }
 
 class _ToDoListPageState extends State<ToDoListPage> {
-  List<Map<String, dynamic>> toDoList = [];
+  List<Map<String, dynamic>> toDoList = [
+    {"taskName": "Fazer a atividade", "taskCompleted": false},
+    {"taskName": "Preparar o trabalho", "taskCompleted": false},
+    {"taskName": "Logar na conta", "taskCompleted": false},
+    {"taskName": "Comprar cenoura", "taskCompleted": false},
+    {"taskName": "Desligar aparelho", "taskCompleted": false},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +36,13 @@ class _ToDoListPageState extends State<ToDoListPage> {
       });
     }
 
+    void deleteTask(int index) {
+      setState(() {
+        print(index);
+        toDoList.removeAt(index);
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.yellow[200],
       appBar: AppBar(
@@ -46,8 +59,11 @@ class _ToDoListPageState extends State<ToDoListPage> {
         padding: const EdgeInsets.only(left: 12, top: 12),
         child: ListView.builder(
             itemCount: toDoList.length,
-            itemBuilder: (context, index) =>
-                ToDoTile(listItem: toDoList[index])),
+            itemBuilder: (context, index) => GestureDetector(
+                onLongPress: () {
+                  deleteTask(index);
+                },
+                child: ToDoTile(listItem: toDoList[index]))),
       ),
     );
   }
